@@ -38,23 +38,13 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @param int $id
+     * @param Product $product
      * @Route("/products/delete/{id}", name="product_delete")
      * @return Response
      */
-    public function delete(int $id): Response
+    public function delete(Product $product): Response
     {
-        /** @var Product $product */
-        $product = $this->repository->findOneBy(
-            [
-                'id' => $id,
-            ]
-        );
-
-        if ($product) {
-            $product->setActive(false);
-        }
-
+        $product->setActive(false);
         $this->entityManager->flush();
 
         return new RedirectResponse("/products");
